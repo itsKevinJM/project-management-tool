@@ -11,7 +11,7 @@ Application qui favorise la gestion de projet et qui permet d'attribuer, gérer,
 >[!IMPORTANT]
 >## Prérequis
 >- React Native
->- 
+>- MongoDB
 
   
 ## Installation
