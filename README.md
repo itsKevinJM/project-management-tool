@@ -12,7 +12,7 @@ Application qui favorise la gestion de projet et qui permet d'attribuer, gérer,
 >## Prérequis
 >- React Native
 >- MongoDB
->
+>- Expo
 >- 
 
   
