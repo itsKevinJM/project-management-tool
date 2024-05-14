@@ -1,3 +1,4 @@
+import React from 'react'
 import { Image, StyleSheet, Platform } from 'react-native';
 
 import { HelloWave } from '@/components/HelloWave';
@@ -16,7 +17,7 @@ export default function HomeScreen() {
         />
       }>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
+        <ThemedText type="title">Welcome !</ThemedText>
         <HelloWave />
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
