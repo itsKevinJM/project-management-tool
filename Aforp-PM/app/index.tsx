@@ -1,13 +1,13 @@
 import React from "react";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
-import TaskListItem from "./components/TaskListItem";
+import TaskListItem from "@/components/TaskListItem";
 
 export default function App() {
     
   return (
     <View style={styles.container}>
-      <Text>Hello world</Text>
+      <TaskListItem />
 
       <StatusBar style="auto" />
     </View>
