@@ -10,9 +10,14 @@ export default function TaskList() {
         { description: 'Second task'},
     ]);
 
+    const [newTask, setNewTask] = useState('');
+
     const createTask = () => {
-        console.warn('Create');    
-    }
+        // console.warn('Create: ', newTask);
+        setTasks([...tasks, { description: newTask }]);
+        
+        setNewTask('');
+    };
 
     return (
         <View style={{ backgroundColor: '#101112', padding: 10, borderRadius: 5, gap: 5}}>
@@ -37,6 +42,8 @@ export default function TaskList() {
 
             {/* New task input */}
             <TextInput 
+                value={newTask}
+                onChangeText={setNewTask}
                 placeholder="New Task" 
                 placeholderTextColor="gray" 
                 style={{ 
