@@ -10,6 +10,10 @@ export default function TaskList() {
         { description: 'Second task'},
     ]);
 
+    const createTask = () => {
+        console.warn('Create');    
+    }
+
     return (
         <View style={{ backgroundColor: '#101112', padding: 10, borderRadius: 5, gap: 5}}>
             <Text 
@@ -42,7 +46,7 @@ export default function TaskList() {
                     borderRadius: 5, 
                 }} 
             />
-            <button title='Add task' />
+            <Button title="add task" onPress={createTask} />
         </View>
     );
 }
