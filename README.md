@@ -45,4 +45,5 @@ En cours
 
 ## Ressources
 
-
+- https://docs.expo.dev/versions/latest/sdk/linear-gradient/
+- https://icons.expo.fyi/Index
