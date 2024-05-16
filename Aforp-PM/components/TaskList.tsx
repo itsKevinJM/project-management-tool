@@ -42,7 +42,7 @@ export default function TaskList() {
                     borderRadius: 5, 
                 }} 
             />
-
+            <button title='Add task' />
         </View>
     );
 }
