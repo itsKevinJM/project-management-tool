@@ -11,7 +11,7 @@ export default function TaskList() {
     ]);
 
     return (
-        <View style={{ backgroundColor: '#101112', padding: 10, borderRadius: 5}}>
+        <View style={{ backgroundColor: '#101112', padding: 10, borderRadius: 5, gap: 5}}>
             <Text 
                 style={{ 
                     color: 'white', 
@@ -32,7 +32,16 @@ export default function TaskList() {
 
 
             {/* New task input */}
-            <TextInput placeholder="New Task" placeholderTextColor="gray" />
+            <TextInput 
+                placeholder="New Task" 
+                placeholderTextColor="gray" 
+                style={{ 
+                    color: 'white', 
+                    padding: 15, 
+                    backgroundColor: '#1A1A1A',
+                    borderRadius: 5, 
+                }} 
+            />
 
         </View>
     );
