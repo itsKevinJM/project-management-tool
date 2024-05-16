@@ -6,8 +6,8 @@ import { useState } from 'react';
 
 export default function TaskList() {
     const [tasks, setTasks] = useState([
-        { description: 'First task'},
-        { description: 'Second task'},
+        { description: 'Faire la maquette'},
+        { description: 'Faire la fonction create task'},
     ]);
 
     const [newTask, setNewTask] = useState('');
@@ -35,7 +35,7 @@ export default function TaskList() {
             <TextInput 
                 value={newTask}
                 onChangeText={setNewTask}
-                placeholder="New Task" 
+                placeholder="Ajouter une tâche" 
                 placeholderTextColor="gray" 
                 style={styles.input} 
             />

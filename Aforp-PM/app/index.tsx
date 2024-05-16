@@ -8,12 +8,12 @@ import TaskBoard from "@/components/TaskBoard";
 export default function App() {
     
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <TaskBoard />
   
-
+      {/* color mobile icon (hour, battery, wifi) */}
       <StatusBar style="auto" />
-    </SafeAreaView>
+    </View>
   );
 }
 
