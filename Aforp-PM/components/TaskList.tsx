@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, FlatList} from 'react-native';
+import {View, Text, FlatList, TextInput, Button} from 'react-native';
 import TaskListItem from './TaskListItem';
 import { useState } from 'react';
 
@@ -32,6 +32,8 @@ export default function TaskList() {
 
 
             {/* New task input */}
+            <TextInput placeholder="New Task" placeholderTextColor="gray" />
+
         </View>
     );
 }
