@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "Aforp-PM",
+    "scheme": "my-app-scheme",
     "slug": "Aforp-PM",
     "version": "1.0.0",
     "orientation": "portrait",
