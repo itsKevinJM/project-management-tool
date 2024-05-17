@@ -6,8 +6,8 @@ import { useState } from 'react';
 
 export default function TaskList() {
     const [tasks, setTasks] = useState([
-        { description: 'Faire la maquette'},
-        { description: 'Faire la fonction create task'},
+        { id: '1', description: 'Faire la maquette'},
+        { id: '2', description: 'Faire la fonction create task'},
     ]);
 
     const [newTask, setNewTask] = useState('');
@@ -39,7 +39,7 @@ export default function TaskList() {
                 placeholderTextColor="gray" 
                 style={styles.input} 
             />
-            <Button title="add task" onPress={createTask} />
+            <Button title="Ajouter une tâche" onPress={createTask} />
         </View>
     );
 }

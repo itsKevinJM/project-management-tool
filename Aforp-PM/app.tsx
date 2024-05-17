@@ -12,7 +12,7 @@ export default function App() {
       <TaskBoard />
   
       {/* color mobile icon (hour, battery, wifi) */}
-      <StatusBar style="auto" />
+      <StatusBar style="light" />
     </View>
   );
 }
