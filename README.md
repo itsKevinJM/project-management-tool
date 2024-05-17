@@ -48,3 +48,4 @@ En cours
 - https://docs.expo.dev/versions/latest/sdk/linear-gradient/
 - https://icons.expo.fyi/Index
 - https://docs.expo.dev/router/introduction/
+- https://reactnavigation.org/
