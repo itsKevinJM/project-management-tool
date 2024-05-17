@@ -14,14 +14,14 @@ export default function TaskListItem({ task }) {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#1A1A1A',
+        backgroundColor: '#EDEDED',
         padding: 16,
         borderRadius: 5,
         flexDirection: 'row',
         justifyContent: 'space-between',
     },
     text: {
-        color: 'white',
-        fontSize: 16,
+        color: 'black',
+        fontSize: 14,
     },
 })
