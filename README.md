@@ -49,3 +49,4 @@ En cours
 - https://icons.expo.fyi/Index
 - https://docs.expo.dev/router/introduction/
 - https://reactnavigation.org/
+- https://www.mongodb.com/docs/atlas/device-sdks/sdk/react-native/install/
