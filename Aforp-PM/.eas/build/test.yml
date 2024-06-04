@@ -1,0 +1,12 @@
+build:
+  name: Run tests
+  steps:
+    - eas/checkout
+    - run:
+        name: Install dependencies
+        command: npm install
+    - run:
+        name: Run tests
+        command: |
+          echo "Running tests…"
+          npm test

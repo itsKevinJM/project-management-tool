@@ -2,22 +2,29 @@ import React from 'react';
 import {View, Text, FlatList, TextInput, Button, StyleSheet} from 'react-native';
 import TaskListItem from './TaskListItem';
 import { useState } from 'react';
+import { useRealm, useQuery } from '@realm/react';
+import { Task } from '../models/Task';
 
 
 export default function TaskList() {
-    const [tasks, setTasks] = useState([
-        { id: '1', description: 'Faire la maquette'},
-        { id: '2', description: 'Faire la fonction create task'},
-    ]);
+    const realm = useRealm();
+    const tasks = useQuery(Task);
+
+    // const [tasks, setTasks] = useState([
+    //     { id: '1', description: 'Faire la maquette'},
+    //     { id: '2', description: 'Faire la fonction create task'},
+    // ]);
 
     const [newTask, setNewTask] = useState('');
 
     const createTask = () => {
         // console.warn('Create: ', newTask);
-        setTasks([...tasks, { description: newTask }]);
-        
+        // setTasks([...tasks, { description: newTask }]);
+        realm.write(() => {
+            realm.create(Task, {description: newTask, user_id: '123'});
+        });
         setNewTask('');
-    };
+    }; 
 
     return (
         <View style={styles.container}>
