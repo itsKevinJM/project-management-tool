@@ -1,12 +1,11 @@
 {
   "expo": {
     "name": "Aforp-PM",
-    "scheme": "my-app-scheme",
+    "scheme": "myapp",
     "slug": "Aforp-PM",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/splash.png",
@@ -20,7 +19,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.anonymous.AforpPM"
     },
     "web": {
       "bundler": "metro",
@@ -32,6 +32,15 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "588c7f05-ce44-4b93-847c-25a6f73cad13"
+      }
+    },
+    "owner": "kevinjm"
   }
 }

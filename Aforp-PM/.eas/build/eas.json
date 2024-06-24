@@ -1,8 +1,13 @@
 {
-    "build": {
-      "test": {
-        "config": "test.yml",
-        "withoutCredentials": true
-      }
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "withoutCredentials": true
+    },
+    "test": {
+      "config": "test.yml",
+      "withoutCredentials": true
+    }
   }
-}  
+}
