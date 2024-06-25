@@ -7,14 +7,16 @@ import Realm from '@/providers/Realm';
 
 export default function RootLayout() {
     return (
+        <>
         <ThemeProvider value={DarkTheme}>
             <Realm>
                 {/* screenOptions for top bar title (title page) */}
                 <Stack screenOptions={{}}></Stack>
             </Realm>
         
-            <StatusBar style="light" />
         </ThemeProvider>
+            <StatusBar style="light" />
+        </>
     ); 
 }
 
