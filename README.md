@@ -50,3 +50,6 @@ En cours
 - https://docs.expo.dev/router/introduction/
 - https://reactnavigation.org/
 - https://www.mongodb.com/docs/atlas/device-sdks/sdk/react-native/install/
+- https://docs.expo.dev/custom-builds/get-started/
+- https://docs.npmjs.com/
+- https://www.mongodb.com/docs/atlas/device-sdks/sdk/react-native/model-data/change-an-object-model/
