@@ -1,4 +1,4 @@
-import react from 'react';
+import React from 'react';
 import { View, StyleSheet, SafeAreaView } from 'react-native';
 import TaskList from './TaskList';
 import { LinearGradient } from 'expo-linear-gradient';
