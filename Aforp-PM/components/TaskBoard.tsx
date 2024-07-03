@@ -7,13 +7,10 @@ import Monfond from '../assets/images/fond-ecran-wallpaper-noir.png';
 export default function TaskBoard() {
     return (
         <ImageBackground source={Monfond} style={styles.backgroundImage}>
-            <LinearGradient
-                // Background Linear Gradient
-                colors={['rgba(255, 182, 193, 0.5)', 'rgba(255, 140, 0, 0.5)', 'rgba(128, 0, 128, 0.5)', 'rgba(0, 0, 255, 0.5)']}
-                style={StyleSheet.absoluteFill}
-            />
             <SafeAreaView style={styles.safeArea}>
-                <TaskList /> 
+                <View style={{ padding: 10, flex: 1 }}>
+                    <TaskList /> 
+                </View>
             </SafeAreaView>
         </ImageBackground>
     );
