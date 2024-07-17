@@ -1,67 +1,64 @@
-import React from 'react';
-import {View, Text, FlatList, TextInput, Button, StyleSheet} from 'react-native';
+import React, { useState } from 'react';
+import { View, FlatList, StyleSheet } from 'react-native';
 import TaskListItem from './TaskListItem';
-import { useState } from 'react';
+import TaskDetailsDialog from './TaskDetailsDialog';
 
+interface Task {
+    description: string;
+    status: string;
+}
 
-export default function TaskList() {
-    const [tasks, setTasks] = useState([
-        { description: 'Faire la maquette'},
-        { description: 'Faire la fonction create task'},
-    ]);
+interface TaskListProps {
+    tasks: Task[];
+    status: string;
+    onChangeTaskStatus: (task: Task, status: string) => void;
+}
 
-    const [newTask, setNewTask] = useState('');
+const TaskList: React.FC<TaskListProps> = ({ tasks, status, onChangeTaskStatus }) => {
+    const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+    const [isDialogVisible, setIsDialogVisible] = useState(false);
 
-    const createTask = () => {
-        // console.warn('Create: ', newTask);
-        setTasks([...tasks, { description: newTask }]);
-        
-        setNewTask('');
+    const handleTaskPress = (task: Task) => {
+        setSelectedTask(task);
+        setIsDialogVisible(true);
     };
+
+    const handleChangeStatus = (status: string) => {
+        if (selectedTask) {
+            onChangeTaskStatus(selectedTask, status);
+            setIsDialogVisible(false);
+        }
+    };
+
+    const filteredTasks = tasks.filter(task => task.status === status);
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Todo</Text>
-
-            {/* The list of tasks */}
-            <FlatList 
-                data={tasks}
-                contentContainerStyle={{ gap: 5 }} 
-                renderItem={({ item }) => <TaskListItem task={item} />}
+            <FlatList
+                data={filteredTasks}
+                contentContainerStyle={{ gap: 5 }}
+                renderItem={({ item }) => (
+                    <TaskListItem task={item} onPress={handleTaskPress} />
+                )}
+                keyExtractor={(item, index) => index.toString()}
             />
-
-
-            {/* New task input */}
-            <TextInput 
-                value={newTask}
-                onChangeText={setNewTask}
-                placeholder="Ajouter une tâche" 
-                placeholderTextColor="gray" 
-                style={styles.input} 
+            <TaskDetailsDialog
+                visible={isDialogVisible}
+                task={selectedTask}
+                onClose={() => setIsDialogVisible(false)}
+                onChangeStatus={handleChangeStatus}
             />
-            <Button title="add task" onPress={createTask} />
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    container : { 
-        backgroundColor: 'white', 
-        padding: 10, 
+    container: {
+        backgroundColor: 'white',
+        padding: 10,
         borderRadius: 5,
         gap: 5,
     },
-    title: {
-        color: 'black', 
-        fontWeight: 'bold', 
-        fontSize: 20, 
-        marginVertical: 10,
-    },
-    input: {
-        color: 'black',
-        padding: 15,
-        backgroundColor: '#EDEDED', 
-        borderRadius: 5,
-    },
 });
 
+export default TaskList;

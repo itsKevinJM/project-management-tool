@@ -1,27 +1,28 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
+import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 
-export default function TaskListItem({ task }) {
+interface TaskListItemProps {
+    task: { description: string };
+    onPress: (task: { description: string }) => void;
+}
+
+const TaskListItem: React.FC<TaskListItemProps> = ({ task, onPress }) => {
     return (
-        <View style={styles.container}>
+        <TouchableOpacity onPress={() => onPress(task)} style={styles.container}>
             <Text style={styles.text}>{task.description}</Text>
-
-            <AntDesign name="close" size={16} color="grey" />
-        </View>
+        </TouchableOpacity>
     );
-} 
+}
 
 const styles = StyleSheet.create({
     container: {
+        padding: 15,
         backgroundColor: '#EDEDED',
-        padding: 16,
         borderRadius: 5,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
     },
     text: {
         color: 'black',
-        fontSize: 14,
     },
-})
+});
+
+export default TaskListItem;
