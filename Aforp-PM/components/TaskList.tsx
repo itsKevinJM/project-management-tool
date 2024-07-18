@@ -1,12 +1,5 @@
 import React from 'react';
 import { View, Text, FlatList, StyleSheet, Button } from 'react-native';
-import TaskListItem from './TaskListItem';
-
-interface TaskListProps {
-    tasks: Task[];
-    status: string;
-    onChangeTaskStatus: (task: Task, newStatus: string) => void;
-}
 
 interface Task {
     name: string;
@@ -16,28 +9,47 @@ interface Task {
     status: string;
 }
 
+interface TaskListProps {
+    tasks: Task[];
+    status: string;
+    onChangeTaskStatus: (task: Task, newStatus: string) => void;
+}
+
 const TaskList: React.FC<TaskListProps> = ({ tasks, status, onChangeTaskStatus }) => {
     const filteredTasks = tasks.filter(task => task.status === status);
 
     return (
-        <View style={styles.container}>
-            <FlatList
-                data={filteredTasks}
-                keyExtractor={(item, index) => index.toString()}
-                renderItem={({ item }) => (
-                    <TaskListItem
-                        task={item}
-                        onChangeTaskStatus={onChangeTaskStatus}
-                    />
-                )}
-            />
-        </View>
+        <FlatList
+            data={filteredTasks}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({ item }) => (
+                <View style={styles.taskItem}>
+                    <Text>{item.name}</Text>
+                    <Text>{item.description}</Text>
+                    <View style={styles.buttonContainer}>
+                        {status === 'Todo' && (
+                            <Button title="In Progress" onPress={() => onChangeTaskStatus(item, 'In Progress')} />
+                        )}
+                        {status === 'In Progress' && (
+                            <Button title="Finished" onPress={() => onChangeTaskStatus(item, 'Finished')} />
+                        )}
+                    </View>
+                </View>
+            )}
+        />
     );
-};
+}
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
+    taskItem: {
+        padding: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: '#ccc',
+    },
+    buttonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: 10,
     },
 });
 

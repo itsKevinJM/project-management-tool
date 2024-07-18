@@ -1,48 +1,69 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Picker } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
-interface MenuDropdownProps {
-    onAddTask: () => void;
+interface DropdownMenuProps {
+    options: string[];
+    onSelect: (option: string) => void;
 }
 
-const MenuDropdown: React.FC<MenuDropdownProps> = ({ onAddTask }) => {
-    const [selectedAction, setSelectedAction] = useState<string | undefined>(undefined);
+const DropdownMenu: React.FC<DropdownMenuProps> = ({ options, onSelect }) => {
+    const [isOpen, setIsOpen] = useState(false);
 
-    const handleActionChange = (itemValue: string) => {
-        setSelectedAction(itemValue);
-        if (itemValue === 'Ajouter une tâche') {
-            onAddTask();
-        }
-        // Ajoutez ici d'autres actions si nécessaire
+    const handleSelect = (option: string) => {
+        onSelect(option);
+        setIsOpen(false);
     };
 
     return (
         <View style={styles.container}>
-            <Picker
-                selectedValue={selectedAction}
-                onValueChange={handleActionChange}
-                style={styles.picker}
-            >
-                <Picker.Item label="Sélectionner une action" value="" />
-                <Picker.Item label="Ajouter une tâche" value="Ajouter une tâche" />
-                <Picker.Item label="Afficher équipe" value="Afficher équipe" />
-                <Picker.Item label="Terminer le projet" value="Terminer le projet" />
-                <Picker.Item label="Afficher état d’avancement" value="Afficher état d’avancement" />
-            </Picker>
+            <TouchableOpacity onPress={() => setIsOpen(!isOpen)} style={styles.button}>
+                <Text style={styles.buttonText}>Menu</Text>
+            </TouchableOpacity>
+            {isOpen && (
+                <View style={styles.dropdown}>
+                    {options.map((option, index) => (
+                        <TouchableOpacity
+                            key={index}
+                            onPress={() => handleSelect(option)}
+                            style={styles.dropdownItem}
+                        >
+                            <Text style={styles.dropdownText}>{option}</Text>
+                        </TouchableOpacity>
+                    ))}
+                </View>
+            )}
         </View>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: 'white',
+        marginBottom: 20,
+    },
+    button: {
         padding: 10,
+        backgroundColor: '#007bff',
         borderRadius: 5,
     },
-    picker: {
-        height: 50,
-        width: 250,
+    buttonText: {
+        color: 'white',
+        textAlign: 'center',
+        fontSize: 16,
+    },
+    dropdown: {
+        marginTop: 10,
+        backgroundColor: 'white',
+        borderRadius: 5,
+        elevation: 3,
+    },
+    dropdownItem: {
+        padding: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: '#ccc',
+    },
+    dropdownText: {
+        fontSize: 16,
     },
 });
 
-export default MenuDropdown;
+export default DropdownMenu;

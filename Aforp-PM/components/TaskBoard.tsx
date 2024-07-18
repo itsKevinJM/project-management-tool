@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, SafeAreaView, ImageBackground, Text, Button,ScrollView } from 'react-native';
+import { View, StyleSheet, SafeAreaView, ImageBackground, Text, Button, ScrollView, Alert } from 'react-native';
 import TaskList from './TaskList';
-import TaskFormDialog from './TaskFormDialog'; // Nouveau composant
+import TaskFormDialog from './TaskFormDialog';
+import MenuDropdown from '../scripts/MenuDropdown'; 
 import Monfond from '../assets/images/fond-ecran-wallpaper-noir.png';
 
 interface Task {
@@ -32,27 +33,36 @@ const TaskBoard: React.FC = () => {
         setIsFormVisible(true);
     };
 
+    const handleDropdownSelect = (option: string) => {
+        Alert.alert(option);
+    };
+
     return (
         <ImageBackground source={Monfond} style={styles.backgroundImage}>
             <SafeAreaView style={styles.safeArea}>
-                <ScrollView style={styles.taskListContainer}>
-                    <Text style={styles.title}>Todo</Text>
-                    <Button title="Ajouter une tâche" onPress={handleAddTask} />
-                    <TaskList tasks={tasks} status="Todo" onChangeTaskStatus={changeTaskStatus} />
+                <ScrollView>
+                    <View style={styles.menuContainer}>
+                        <MenuDropdown options={['Afficher équipe', 'Afficher état d’avancement']} onSelect={handleDropdownSelect} />
+                    </View>
+                    <View style={styles.taskListContainer}>
+                        <Text style={styles.title}>Todo</Text>
+                        <Button title="Ajouter une tâche" onPress={handleAddTask} />
+                        <TaskList tasks={tasks} status="Todo" onChangeTaskStatus={changeTaskStatus} />
+                    </View>
+                    <View style={styles.taskListContainer}>
+                        <Text style={styles.title}>In Progress</Text>
+                        <TaskList tasks={tasks} status="In Progress" onChangeTaskStatus={changeTaskStatus} />
+                    </View>
+                    <View style={styles.taskListContainer}>
+                        <Text style={styles.title}>Finished</Text>
+                        <TaskList tasks={tasks} status="Finished" onChangeTaskStatus={changeTaskStatus} />
+                    </View>
+                    <TaskFormDialog
+                        visible={isFormVisible}
+                        onClose={() => setIsFormVisible(false)}
+                        onSubmit={addTask}
+                    />
                 </ScrollView>
-                <ScrollView style={styles.taskListContainer}>
-                    <Text style={styles.title}>In Progress</Text>
-                    <TaskList tasks={tasks} status="In Progress" onChangeTaskStatus={changeTaskStatus} />
-                </ScrollView>
-                <ScrollView style={styles.taskListContainer}>
-                    <Text style={styles.title}>Finished</Text>
-                    <TaskList tasks={tasks} status="Finished" onChangeTaskStatus={changeTaskStatus} />
-                </ScrollView>
-                <TaskFormDialog
-                    visible={isFormVisible}
-                    onClose={() => setIsFormVisible(false)}
-                    onSubmit={addTask}
-                />
             </SafeAreaView>
         </ImageBackground>
     );
@@ -66,6 +76,12 @@ const styles = StyleSheet.create({
     safeArea: {
         flex: 1,
         padding: 10,
+    },
+    menuContainer: {
+        marginBottom: 20,
+        padding: 10,
+        backgroundColor: 'rgba(255, 255, 255, 0.8)',
+        borderRadius: 10,
     },
     taskListContainer: {
         padding: 10,

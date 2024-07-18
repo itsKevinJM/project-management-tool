@@ -1,12 +1,6 @@
 import React, { useState } from 'react';
-import { Modal, View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, Modal } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-
-interface TaskFormDialogProps {
-    visible: boolean;
-    onClose: () => void;
-    onSubmit: (task: Task) => void;
-}
 
 interface Task {
     name: string;
@@ -16,56 +10,79 @@ interface Task {
     status: string;
 }
 
+interface TaskFormDialogProps {
+    visible: boolean;
+    onClose: () => void;
+    onSubmit: (task: Task) => void;
+}
+
 const TaskFormDialog: React.FC<TaskFormDialogProps> = ({ visible, onClose, onSubmit }) => {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
-    const [status, setStatus] = useState('Todo');
+    const [showStartDatePicker, setShowStartDatePicker] = useState(false);
+    const [showEndDatePicker, setShowEndDatePicker] = useState(false);
 
-    const handleSubmit = () => {
-        onSubmit({ name, description, startDate, endDate, status });
+    const handleAddTask = () => {
+        onSubmit({
+            name,
+            description,
+            startDate,
+            endDate,
+            status: 'Todo',
+        });
         onClose();
     };
 
     return (
         <Modal visible={visible} transparent={true} animationType="slide">
             <View style={styles.modalContainer}>
-                <View style={styles.dialogContainer}>
+                <View style={styles.formContainer}>
                     <Text style={styles.title}>Ajouter une tâche</Text>
                     <TextInput
-                        style={styles.input}
                         placeholder="Nom"
                         value={name}
                         onChangeText={setName}
+                        style={styles.input}
                     />
                     <TextInput
-                        style={styles.input}
                         placeholder="Description"
                         value={description}
                         onChangeText={setDescription}
+                        style={styles.input}
                     />
-                    <View style={styles.dateContainer}>
-                        <Text>Date de début:</Text>
+                    <Button title="Date de début" onPress={() => setShowStartDatePicker(true)} />
+                    {showStartDatePicker && (
                         <DateTimePicker
                             value={startDate}
                             mode="date"
                             display="default"
-                            onChange={(event, date) => date && setStartDate(date)}
+                            onChange={(event, date) => {
+                                setShowStartDatePicker(false);
+                                if (date) {
+                                    setStartDate(date);
+                                }
+                            }}
                         />
-                    </View>
-                    <View style={styles.dateContainer}>
-                        <Text>Date de fin:</Text>
+                    )}
+                    <Button title="Date de fin" onPress={() => setShowEndDatePicker(true)} />
+                    {showEndDatePicker && (
                         <DateTimePicker
                             value={endDate}
                             mode="date"
                             display="default"
-                            onChange={(event, date) => date && setEndDate(date)}
+                            onChange={(event, date) => {
+                                setShowEndDatePicker(false);
+                                if (date) {
+                                    setEndDate(date);
+                                }
+                            }}
                         />
-                    </View>
-                    <View style={styles.buttonContainer}>
+                    )}
+                    <View style={styles.buttonRow}>
                         <Button title="Annuler" onPress={onClose} />
-                        <Button title="Ajouter" onPress={handleSubmit} />
+                        <Button title="Ajouter" onPress={handleAddTask} />
                     </View>
                 </View>
             </View>
@@ -80,35 +97,28 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
     },
-    dialogContainer: {
-        width: '80%',
-        padding: 20,
+    formContainer: {
         backgroundColor: 'white',
+        padding: 20,
         borderRadius: 10,
-        alignItems: 'center',
+        width: '80%',
     },
     title: {
         fontSize: 18,
         fontWeight: 'bold',
-        marginBottom: 10,
+        marginBottom: 20,
     },
     input: {
-        width: '100%',
-        padding: 10,
+        height: 40,
+        borderColor: 'gray',
+        borderWidth: 1,
         marginBottom: 10,
-        backgroundColor: '#EDEDED',
-        borderRadius: 5,
+        paddingHorizontal: 10,
     },
-    dateContainer: {
-        width: '100%',
-        marginBottom: 10,
-        alignItems: 'flex-start',
-    },
-    buttonContainer: {
+    buttonRow: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginTop: 20,
-        width: '100%',
     },
 });
 
