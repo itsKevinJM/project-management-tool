@@ -1,63 +1,43 @@
-import React, { useState } from 'react';
-import { View, FlatList, StyleSheet } from 'react-native';
+import React from 'react';
+import { View, Text, FlatList, StyleSheet, Button } from 'react-native';
 import TaskListItem from './TaskListItem';
-import TaskDetailsDialog from './TaskDetailsDialog';
-
-interface Task {
-    description: string;
-    status: string;
-}
 
 interface TaskListProps {
     tasks: Task[];
     status: string;
-    onChangeTaskStatus: (task: Task, status: string) => void;
+    onChangeTaskStatus: (task: Task, newStatus: string) => void;
+}
+
+interface Task {
+    name: string;
+    description: string;
+    startDate: Date;
+    endDate: Date;
+    status: string;
 }
 
 const TaskList: React.FC<TaskListProps> = ({ tasks, status, onChangeTaskStatus }) => {
-    const [selectedTask, setSelectedTask] = useState<Task | null>(null);
-    const [isDialogVisible, setIsDialogVisible] = useState(false);
-
-    const handleTaskPress = (task: Task) => {
-        setSelectedTask(task);
-        setIsDialogVisible(true);
-    };
-
-    const handleChangeStatus = (status: string) => {
-        if (selectedTask) {
-            onChangeTaskStatus(selectedTask, status);
-            setIsDialogVisible(false);
-        }
-    };
-
     const filteredTasks = tasks.filter(task => task.status === status);
 
     return (
         <View style={styles.container}>
             <FlatList
                 data={filteredTasks}
-                contentContainerStyle={{ gap: 5 }}
-                renderItem={({ item }) => (
-                    <TaskListItem task={item} onPress={handleTaskPress} />
-                )}
                 keyExtractor={(item, index) => index.toString()}
-            />
-            <TaskDetailsDialog
-                visible={isDialogVisible}
-                task={selectedTask}
-                onClose={() => setIsDialogVisible(false)}
-                onChangeStatus={handleChangeStatus}
+                renderItem={({ item }) => (
+                    <TaskListItem
+                        task={item}
+                        onChangeTaskStatus={onChangeTaskStatus}
+                    />
+                )}
             />
         </View>
     );
-}
+};
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: 'white',
-        padding: 10,
-        borderRadius: 5,
-        gap: 5,
+        flex: 1,
     },
 });
 

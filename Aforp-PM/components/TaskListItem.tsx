@@ -1,27 +1,41 @@
 import React from 'react';
-import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Button } from 'react-native';
 
 interface TaskListItemProps {
-    task: { description: string };
-    onPress: (task: { description: string }) => void;
+    task: Task;
+    onChangeTaskStatus: (task: Task, newStatus: string) => void;
 }
 
-const TaskListItem: React.FC<TaskListItemProps> = ({ task, onPress }) => {
-    return (
-        <TouchableOpacity onPress={() => onPress(task)} style={styles.container}>
-            <Text style={styles.text}>{task.description}</Text>
-        </TouchableOpacity>
-    );
+interface Task {
+    name: string;
+    description: string;
+    startDate: Date;
+    endDate: Date;
+    status: string;
 }
+
+const TaskListItem: React.FC<TaskListItemProps> = ({ task, onChangeTaskStatus }) => {
+    return (
+        <View style={styles.container}>
+            <Text style={styles.name}>{task.name}</Text>
+            <Text>{task.description}</Text>
+            <Text>{task.startDate.toDateString()}</Text>
+            <Text>{task.endDate.toDateString()}</Text>
+            {task.status === 'Todo' && <Button title="In Progress" onPress={() => onChangeTaskStatus(task, 'In Progress')} />}
+            {task.status === 'In Progress' && <Button title="Finished" onPress={() => onChangeTaskStatus(task, 'Finished')} />}
+        </View>
+    );
+};
 
 const styles = StyleSheet.create({
     container: {
-        padding: 15,
-        backgroundColor: '#EDEDED',
+        padding: 10,
+        backgroundColor: 'white',
         borderRadius: 5,
+        marginBottom: 10,
     },
-    text: {
-        color: 'black',
+    name: {
+        fontWeight: 'bold',
     },
 });
 

@@ -1,47 +1,37 @@
 import React, { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
+import { View, StyleSheet, Picker } from 'react-native';
 
-export default function MenuDropdown() {
-    const [selectedAction, setSelectedAction] = useState('');
+interface MenuDropdownProps {
+    onAddTask: () => void;
+}
 
-    const handleActionChange = (itemValue) => {
+const MenuDropdown: React.FC<MenuDropdownProps> = ({ onAddTask }) => {
+    const [selectedAction, setSelectedAction] = useState<string | undefined>(undefined);
+
+    const handleActionChange = (itemValue: string) => {
         setSelectedAction(itemValue);
-        // Ajoutez ici la logique pour gérer chaque action
-        switch (itemValue) {
-            case 'ajouterTache':
-                // logique pour ajouter une tâche
-                break;
-            case 'afficherEquipe':
-                // logique pour afficher l'équipe
-                break;
-            case 'terminerProjet':
-                // logique pour terminer le projet
-                break;
-            case 'afficherEtat':
-                // logique pour afficher l'état d'avancement
-                break;
-            default:
-                break;
+        if (itemValue === 'Ajouter une tâche') {
+            onAddTask();
         }
+        // Ajoutez ici d'autres actions si nécessaire
     };
 
     return (
         <View style={styles.container}>
             <Picker
                 selectedValue={selectedAction}
-                style={styles.picker}
                 onValueChange={handleActionChange}
+                style={styles.picker}
             >
                 <Picker.Item label="Sélectionner une action" value="" />
-                <Picker.Item label="Ajouter une tâche" value="ajouterTache" />
-                <Picker.Item label="Afficher équipe" value="afficherEquipe" />
-                <Picker.Item label="Terminer le projet" value="terminerProjet" />
-                <Picker.Item label="Afficher état d’avancement" value="afficherEtat" />
+                <Picker.Item label="Ajouter une tâche" value="Ajouter une tâche" />
+                <Picker.Item label="Afficher équipe" value="Afficher équipe" />
+                <Picker.Item label="Terminer le projet" value="Terminer le projet" />
+                <Picker.Item label="Afficher état d’avancement" value="Afficher état d’avancement" />
             </Picker>
         </View>
     );
-}
+};
 
 const styles = StyleSheet.create({
     container: {
@@ -51,6 +41,8 @@ const styles = StyleSheet.create({
     },
     picker: {
         height: 50,
-        width: '100%',
+        width: 250,
     },
 });
+
+export default MenuDropdown;
