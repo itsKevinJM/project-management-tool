@@ -12,6 +12,8 @@ interface Task {
     startDate: Date;
     endDate: Date;
     status: string;
+    priority: string;
+    teamMembers: string[];
 }
 
 const TaskListItem: React.FC<TaskListItemProps> = ({ task, onChangeTaskStatus }) => {
@@ -21,6 +23,8 @@ const TaskListItem: React.FC<TaskListItemProps> = ({ task, onChangeTaskStatus })
             <Text>{task.description}</Text>
             <Text>{task.startDate.toDateString()}</Text>
             <Text>{task.endDate.toDateString()}</Text>
+            <Text>Priorité: {task.priority}</Text>
+            <Text>Équipe: {task.teamMembers.join(', ')}</Text>
             {task.status === 'Todo' && <Button title="In Progress" onPress={() => onChangeTaskStatus(task, 'In Progress')} />}
             {task.status === 'In Progress' && <Button title="Finished" onPress={() => onChangeTaskStatus(task, 'Finished')} />}
         </View>

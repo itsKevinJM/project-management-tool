@@ -8,6 +8,8 @@ interface Task {
     startDate: Date;
     endDate: Date;
     status: string;
+    priority: string;
+    teamMembers: string[];
 }
 
 interface TaskFormDialogProps {
@@ -21,6 +23,8 @@ const TaskFormDialog: React.FC<TaskFormDialogProps> = ({ visible, onClose, onSub
     const [description, setDescription] = useState('');
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
+    const [priority, setPriority] = useState('');
+    const [teamMembers, setTeamMembers] = useState('');
     const [showStartDatePicker, setShowStartDatePicker] = useState(false);
     const [showEndDatePicker, setShowEndDatePicker] = useState(false);
 
@@ -31,6 +35,8 @@ const TaskFormDialog: React.FC<TaskFormDialogProps> = ({ visible, onClose, onSub
             startDate,
             endDate,
             status: 'Todo',
+            priority,
+            teamMembers: teamMembers.split(',').map(member => member.trim()),
         });
         onClose();
     };
@@ -50,6 +56,18 @@ const TaskFormDialog: React.FC<TaskFormDialogProps> = ({ visible, onClose, onSub
                         placeholder="Description"
                         value={description}
                         onChangeText={setDescription}
+                        style={styles.input}
+                    />
+                    <TextInput
+                        placeholder="Priorité"
+                        value={priority}
+                        onChangeText={setPriority}
+                        style={styles.input}
+                    />
+                    <TextInput
+                        placeholder="Membres de l'équipe (séparés par des virgules)"
+                        value={teamMembers}
+                        onChangeText={setTeamMembers}
                         style={styles.input}
                     />
                     <Button title="Date de début" onPress={() => setShowStartDatePicker(true)} />

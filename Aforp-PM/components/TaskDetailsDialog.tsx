@@ -4,6 +4,8 @@ import { Modal, View, Text, Button, StyleSheet } from 'react-native';
 interface Task {
     description: string;
     status: string;
+    priority: string;
+    teamMembers: string[];
 }
 
 interface TaskDetailsDialogProps {
@@ -23,6 +25,8 @@ const TaskDetailsDialog: React.FC<TaskDetailsDialogProps> = ({ visible, task, on
                     <Text style={styles.title}>Détails de la tâche</Text>
                     <Text style={styles.description}>Description: {task.description}</Text>
                     <Text style={styles.description}>Statut actuel: {task.status}</Text>
+                    <Text style={styles.description}>Priorité: {task.priority}</Text>
+                    <Text style={styles.description}>Équipe: {task.teamMembers.join(', ')}</Text>
                     <View style={styles.buttonContainer}>
                         <Button title="Fermer" onPress={onClose} />
                     </View>
@@ -63,10 +67,10 @@ const styles = StyleSheet.create({
     },
     description: {
         fontSize: 16,
-        marginBottom: 20,
+        marginBottom: 10,
     },
     buttonContainer: {
-        marginTop: 20,
+        marginTop: 10,
     },
 });
 

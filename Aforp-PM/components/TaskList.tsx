@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, FlatList, StyleSheet, Button } from 'react-native';
+import { View, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import TaskListItem from './TaskListItem';
 
 interface Task {
     name: string;
@@ -7,15 +8,18 @@ interface Task {
     startDate: Date;
     endDate: Date;
     status: string;
+    priority: string;
+    teamMembers: string[];
 }
 
 interface TaskListProps {
     tasks: Task[];
     status: string;
     onChangeTaskStatus: (task: Task, newStatus: string) => void;
+    onSelectTask: (task: Task) => void;
 }
 
-const TaskList: React.FC<TaskListProps> = ({ tasks, status, onChangeTaskStatus }) => {
+const TaskList: React.FC<TaskListProps> = ({ tasks, status, onChangeTaskStatus, onSelectTask }) => {
     const filteredTasks = tasks.filter(task => task.status === status);
 
     return (
@@ -23,18 +27,9 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, status, onChangeTaskStatus }
             data={filteredTasks}
             keyExtractor={(item, index) => index.toString()}
             renderItem={({ item }) => (
-                <View style={styles.taskItem}>
-                    <Text>{item.name}</Text>
-                    <Text>{item.description}</Text>
-                    <View style={styles.buttonContainer}>
-                        {status === 'Todo' && (
-                            <Button title="In Progress" onPress={() => onChangeTaskStatus(item, 'In Progress')} />
-                        )}
-                        {status === 'In Progress' && (
-                            <Button title="Finished" onPress={() => onChangeTaskStatus(item, 'Finished')} />
-                        )}
-                    </View>
-                </View>
+                <TouchableOpacity onPress={() => onSelectTask(item)}>
+                    <TaskListItem task={item} onChangeTaskStatus={onChangeTaskStatus} />
+                </TouchableOpacity>
             )}
         />
     );

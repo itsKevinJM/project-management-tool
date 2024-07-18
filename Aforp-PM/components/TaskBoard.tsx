@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { View, StyleSheet, SafeAreaView, ImageBackground, Text, Button, ScrollView, Alert } from 'react-native';
 import TaskList from './TaskList';
 import TaskFormDialog from './TaskFormDialog';
-import MenuDropdown from '../scripts/MenuDropdown'; 
+import TaskDetailsDialog from './TaskDetailsDialog';
+import MenuDropdown from '../scripts/MenuDropdown';
 import Monfond from '../assets/images/fond-ecran-wallpaper-noir.png';
 
 interface Task {
@@ -11,15 +12,18 @@ interface Task {
     startDate: Date;
     endDate: Date;
     status: string;
+    priority: string;
+    teamMembers: string[];
 }
 
 const TaskBoard: React.FC = () => {
     const [tasks, setTasks] = useState<Task[]>([
-        { name: 'Maquette', description: 'Faire la maquette', startDate: new Date(), endDate: new Date(), status: 'Todo' },
-        { name: 'Create Task', description: 'Faire la fonction create task', startDate: new Date(), endDate: new Date(), status: 'In Progress' },
+        { name: 'Maquette', description: 'Faire la maquette', startDate: new Date(), endDate: new Date(), status: 'Todo', priority: 'High', teamMembers: ['Alice', 'Bob'] },
+        { name: 'Create Task', description: 'Faire la fonction create task', startDate: new Date(), endDate: new Date(), status: 'In Progress', priority: 'Medium', teamMembers: ['Charlie', 'David'] },
     ]);
 
     const [isFormVisible, setIsFormVisible] = useState(false);
+    const [selectedTask, setSelectedTask] = useState<Task | null>(null);
 
     const addTask = (task: Task) => {
         setTasks([...tasks, task]);
@@ -37,6 +41,10 @@ const TaskBoard: React.FC = () => {
         Alert.alert(option);
     };
 
+    const handleTaskSelect = (task: Task) => {
+        setSelectedTask(task);
+    };
+
     return (
         <ImageBackground source={Monfond} style={styles.backgroundImage}>
             <SafeAreaView style={styles.safeArea}>
@@ -47,20 +55,31 @@ const TaskBoard: React.FC = () => {
                     <View style={styles.taskListContainer}>
                         <Text style={styles.title}>Todo</Text>
                         <Button title="Ajouter une tâche" onPress={handleAddTask} />
-                        <TaskList tasks={tasks} status="Todo" onChangeTaskStatus={changeTaskStatus} />
+                        <TaskList tasks={tasks} status="Todo" onChangeTaskStatus={changeTaskStatus} onSelectTask={handleTaskSelect} />
                     </View>
                     <View style={styles.taskListContainer}>
                         <Text style={styles.title}>In Progress</Text>
-                        <TaskList tasks={tasks} status="In Progress" onChangeTaskStatus={changeTaskStatus} />
+                        <TaskList tasks={tasks} status="In Progress" onChangeTaskStatus={changeTaskStatus} onSelectTask={handleTaskSelect} />
                     </View>
                     <View style={styles.taskListContainer}>
                         <Text style={styles.title}>Finished</Text>
-                        <TaskList tasks={tasks} status="Finished" onChangeTaskStatus={changeTaskStatus} />
+                        <TaskList tasks={tasks} status="Finished" onChangeTaskStatus={changeTaskStatus} onSelectTask={handleTaskSelect} />
                     </View>
                     <TaskFormDialog
                         visible={isFormVisible}
                         onClose={() => setIsFormVisible(false)}
                         onSubmit={addTask}
+                    />
+                    <TaskDetailsDialog
+                        visible={selectedTask !== null}
+                        task={selectedTask}
+                        onClose={() => setSelectedTask(null)}
+                        onChangeStatus={(status) => {
+                            if (selectedTask) {
+                                changeTaskStatus(selectedTask, status);
+                            }
+                            setSelectedTask(null);
+                        }}
                     />
                 </ScrollView>
             </SafeAreaView>
